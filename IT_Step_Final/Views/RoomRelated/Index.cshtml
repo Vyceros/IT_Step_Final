@@ -1,0 +1,75 @@
+﻿@using OnlineBooking.Domain.Dtos
+@model IEnumerable<RoomModel>
+
+@{
+    ViewData["Title"] = "Hotel";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped">
+
+    <thead>
+        <p class="card">
+            <a asp-action="Create" class="btn btn-primary">ოთახის დამატება</a>
+        </p>
+        <tr>
+            <th>
+               Name
+            </th>
+            <th>
+               Price Per day
+            </th>
+            <th>
+               Avalibility
+            </th>
+            <th>
+             MaxGuest
+            </th>
+            <th>
+               Hotel Id
+            </th>
+            <th>
+                Picture
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PricePerDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isAvailable)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.maxGuests )
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.HotelId)
+                </td>
+                <td>
+                    <img src="@item.PicturePath" alt="Room picture" class="img-thumbnail" style="width: 100px; height: 100px;" />
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">რედაქტირება</a>
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">დეტალები</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">წაშლა</a>
+                    }
+                    else
+                    {
+                        <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">დეტალები</a>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
